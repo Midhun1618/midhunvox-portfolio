@@ -1,0 +1,252 @@
+/*
+ * Component classes: buttons, cards, labels, chips.
+ * Reusable from plain markup or via the React wrappers in
+ * src/components/ui (Button, Card, Label). Interactive states are defined for
+ * hover, active, focus-visible, disabled/aria-disabled and loading.
+ */
+@layer components {
+  /* ── Buttons ───────────────────────────────────────────────────── */
+  .btn {
+    --btn-bg: transparent;
+    --btn-fg: var(--foreground);
+    --btn-border: transparent;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 2.75rem; /* ≥ 44px touch target */
+    padding: 0.625rem 1.375rem;
+    border: var(--border-width) solid var(--btn-border);
+    border-radius: var(--radius-pill);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out);
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+  .btn:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: var(--duration-instant);
+  }
+  .btn:focus-visible {
+    outline: var(--border-width-strong) solid var(--ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-pill);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
+  }
+  .btn[data-loading="true"] {
+    cursor: progress;
+    pointer-events: none;
+  }
+  .btn[data-loading="true"]::after {
+    content: "";
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btn-spin 0.8s linear infinite;
+  }
+  @keyframes btn-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Primary: brand gradient, white text (4.5:1 on blue end, 6.8:1 on violet). */
+  .btn-primary {
+    --btn-fg: #ffffff;
+    background-image: var(--gradient-brand);
+    box-shadow:
+      var(--shadow-edge),
+      0 8px 24px -8px rgb(47 107 255 / 0.6);
+  }
+  .btn-primary:hover {
+    box-shadow:
+      var(--shadow-edge),
+      var(--shadow-glow-blue);
+    filter: brightness(1.1);
+  }
+
+  /* Accent: solid cyan fill, canvas-coloured text (12.9:1). */
+  .btn-accent {
+    --btn-bg: var(--cyan);
+    --btn-fg: var(--accent-contrast);
+    font-weight: 600;
+  }
+  .btn-accent:hover {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+
+  /* Secondary: outlined. */
+  .btn-secondary {
+    --btn-border: var(--border-strong);
+    --btn-bg: rgb(234 242 255 / 0.03);
+  }
+  .btn-secondary:hover {
+    --btn-border: var(--cyan);
+    --btn-fg: var(--cyan);
+    --btn-bg: rgb(0 229 255 / 0.08);
+  }
+
+  /* Ghost: text only. */
+  .btn-ghost {
+    --btn-fg: var(--muted);
+    padding-inline: 0.875rem;
+  }
+  .btn-ghost:hover {
+    --btn-fg: var(--foreground);
+    --btn-bg: rgb(234 242 255 / 0.06);
+  }
+
+  .btn-sm {
+    min-height: 2.25rem; /* use only where spacing around guarantees a 44px target */
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+  .btn-lg {
+    min-height: 3.5rem;
+    padding: 0.875rem 1.875rem;
+    font-size: 0.875rem;
+  }
+
+  /* ── Cards ─────────────────────────────────────────────────────── */
+  .card {
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-raised);
+    background-image: var(--gradient-sheen);
+    box-shadow: var(--shadow-edge), var(--shadow-md);
+    transition:
+      transform var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      background-color var(--duration-fast) var(--ease-out);
+  }
+  @media (min-width: 48rem) {
+    .card {
+      padding: 2rem;
+    }
+  }
+
+  /* Opt-in hover/focus lift for clickable cards. */
+  .card-interactive {
+    cursor: pointer;
+  }
+  .card-interactive:hover,
+  .card-interactive:focus-within {
+    transform: translateY(-3px);
+    border-color: rgb(0 229 255 / 0.45);
+    background-color: var(--surface-overlay);
+    box-shadow: var(--shadow-edge), var(--shadow-lg), 0 0 40px -12px rgb(0 229 255 / 0.35);
+  }
+
+  /* Flat variant for dense lists / the timeline "clips". */
+  .card-flat {
+    background-image: none;
+    background-color: var(--surface);
+    box-shadow: none;
+  }
+
+  /* Glass variant for overlays on mesh backgrounds. */
+  .card-glass {
+    background: rgb(10 17 40 / 0.62);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+  }
+
+  /* Featured variant: gradient edge + soft glow. */
+  .card-featured {
+    border-color: transparent;
+    box-shadow: var(--shadow-edge), var(--shadow-lg), 0 0 60px -20px rgb(77 43 255 / 0.55);
+  }
+  .card-featured::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--border-width);
+    border-radius: inherit;
+    background: var(--gradient-neon);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* ── Mono labels, timecodes, chips ─────────────────────────────── */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .timecode {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.06em;
+    color: var(--cyan);
+    font-variant-numeric: tabular-nums;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border: var(--border-width) solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Windows high-contrast / forced colours: keep boundaries visible. */
+  @media (forced-colors: active) {
+    .btn,
+    .card,
+    .chip {
+      border-color: CanvasText;
+    }
+    .btn-primary,
+    .btn-accent {
+      background-image: none;
+      background-color: ButtonFace;
+      color: ButtonText;
+    }
+    .card-featured::before {
+      display: none;
+    }
+  }
+}

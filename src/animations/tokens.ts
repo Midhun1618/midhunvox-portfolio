@@ -1,8 +1,10 @@
 /**
- * Shared motion tokens. Provisional values — the motion/design module may
- * retune them, but animations must reference these, never magic numbers.
+ * Shared motion tokens (seconds). Mirrors the CSS variables in
+ * src/styles/tokens.css (--duration-*, --ease-*): change both together.
+ * Animations must reference these, never magic numbers.
  */
 export const duration = {
+  instant: 0.12,
   fast: 0.25,
   base: 0.6,
   slow: 1.0,
@@ -24,3 +26,10 @@ export const motionEase = {
 
 /** Default ScrollTrigger start for reveal-on-scroll animations. */
 export const scrollStart = "top 85%";
+
+/** Stagger gaps (seconds) between sibling reveals. */
+export const stagger = {
+  tight: 0.04,
+  base: 0.08,
+  loose: 0.15,
+} as const;

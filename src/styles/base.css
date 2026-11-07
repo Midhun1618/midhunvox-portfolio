@@ -1,0 +1,73 @@
+/* Base element styles, accessibility defaults and the Lenis base rules. */
+@layer base {
+  html {
+    background: var(--background);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgb(0 229 255 / 0.28);
+    color: var(--foreground);
+  }
+
+  /* One focus ring for everything interactive: 2px cyan, offset so it
+     clears rounded edges. 12.9:1 on the canvas; always visible, never removed. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--border-width-strong) solid var(--ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Dark scrollbars to match the canvas. */
+  * {
+    scrollbar-color: var(--border-strong) var(--background);
+  }
+}
+
+/* Lenis recommended base styles. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Global reduced-motion safety net for CSS transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

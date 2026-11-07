@@ -1,75 +1,15 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Neutral, provisional values — the design-system module owns
- * the final palette and type scale. Components must use these tokens (via the
- * Tailwind utilities they generate: bg-background, text-muted, border-border,
- * max-w-container ...) and never raw hex values.
+ * midhunvox design system (M02 — "THE TIMELINE").
+ * Entry point only: the system lives in src/styles/ and is documented in
+ * docs/design-system.md.
+ *   tokens.css      colours, type scale, radius, shadows, motion, breakpoints
+ *   base.css        element defaults, focus ring, reduced-motion, Lenis
+ *   utilities.css   gradient / glow / atmosphere utilities
+ *   components.css  .btn, .card, .label, .timecode, .chip
  */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --muted: #6b6b6b;
-  --border: #e5e5e5;
-  --accent: #171717; /* TODO: brand accent */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted: #9a9a9a;
-    --border: #262626;
-    --accent: #ededed; /* TODO: brand accent */
-  }
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --container-container: 80rem;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* Lenis recommended base styles. */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-/* Global reduced-motion safety net for CSS transitions/animations. */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+@import "../styles/tokens.css";
+@import "../styles/base.css";
+@import "../styles/utilities.css";
+@import "../styles/components.css";
